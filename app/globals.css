@@ -75,10 +75,6 @@
   }
 }
 
-.auth {
-  @apply flex-center min-h-screen w-full bg-purple-100
-}
-
 .root {
   @apply flex min-h-screen w-full flex-col bg-white lg:flex-row;
 }
@@ -363,6 +359,16 @@
 }
 
 /* Clerk  */
+.auth {
+  @apply flex-center min-h-screen w-full bg-purple-100
+}
+
+.auth > div > div > :last-child,
+.cl-modalContent > div > div > :last-child,
+.cl-userButtonPopoverFooter {
+  display: none;
+}
+
 .cl-userButtonBox {
   display: flex;
   flex-flow: row-reverse;
