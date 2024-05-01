@@ -22,7 +22,7 @@ export const navLinks = [
   {
     label: "Recolorir Objetos",
     route: "/transformations/add/recolor",
-    icon: "/assets/icons/filter.svg",
+    icon: "/assets/icons/paint-bucket.svg",
   }, 
   {
     label: "Remover Fundo",
@@ -34,7 +34,12 @@ export const navLinks = [
     route: "/transformations/add/crop",
     icon: "/assets/icons/crop.svg",
   },
-   {
+  {
+    label: "Meu perfil",
+    route: "/profile",
+    icon: "/assets/icons/profile.svg",
+  },
+  {
     label: "Sair",
     route: "/sign-in",
     icon: "/assets/icons/sign-out.svg",
@@ -79,7 +84,7 @@ export const transformationTypes = {
     config: {
       recolor: { prompt: "", to: "", multiple: true },
     },
-    icon: "filter.svg",
+    icon: "paint-bucket.svg",
   },
   crop: {
     type: "crop",

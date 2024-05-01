@@ -68,10 +68,12 @@ const Sidebar = () => {
             <ul className="sidebar-nav_elements">
               {navLinks.slice(0, 7).map(renderNavItem)}
             </ul>
-            <ul>
+            <ul className="sidebar-nav_elements">
+              {navLinks.slice(7,8).map(renderNavItem)}
+
               <SignOutButton signOutCallback={handleSignOut}>
                 <button>
-                  {navLinks.slice(7, 8).map(renderNavItem)}
+                  {navLinks.slice(8).map(renderNavItem)}
                 </button>
               </SignOutButton>
             </ul>

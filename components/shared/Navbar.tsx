@@ -15,10 +15,9 @@ const Navbar = () => {
         />
       </Link>
 
-      <UserButton 
-        afterSignOutUrl='/' 
-        showName
-      />
+      <div className="user-avatar-wrapper">
+        <UserButton afterSignOutUrl='/' showName/>
+      </div>
     </div>
   )
 }

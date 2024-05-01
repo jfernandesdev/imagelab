@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/localizations": "^2.0.0",
     "@clerk/nextjs": "^4.30.0",
+    "@radix-ui/react-dialog": "^1.0.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.372.0",
