@@ -26,7 +26,7 @@ export const navLinks = [
   }, 
   {
     label: "Remover Fundo",
-    route: "/transformations/add/remove-background",
+    route: "/transformations/add/removeBackground",
     icon: "/assets/icons/camera-slash.svg",
   },
   {
@@ -55,7 +55,7 @@ export const transformationTypes = {
     icon: "image-broken.svg",
   },
   removeBackground: {
-    type: "remove-background",
+    type: "removeBackground",
     title: "Remover Fundo",
     subTitle: "Destaque o que realmente importa em suas fotos usando IA.",
     config: { removeBackground: true },

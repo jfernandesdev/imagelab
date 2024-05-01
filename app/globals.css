@@ -99,13 +99,13 @@
 }
 
 .root-container {
-  @apply flex-1 overflow-auto lg:mt-16 lg:max-h-screen;
+  @apply flex-1 overflow-auto py-8 lg:max-h-screen;
 }
 
 /* Tailwind Styles */
 @layer utilities {
   .wrapper {
-    @apply mx-auto h-full pt-6 px-32 w-full text-dark-400 p-16-regular;
+    @apply mx-auto h-full w-full text-dark-400 p-16-regular px-6 py-16 lg:px-32;
   }
   
   .gradient-text {
