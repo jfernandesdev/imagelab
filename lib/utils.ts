@@ -6,8 +6,6 @@ import { twMerge } from "tailwind-merge";
 
 import { aspectRatioOptions } from "@/constants";
 
-export type AspectRatioKey = keyof typeof aspectRatioOptions;
-
 // Função para combinar classes usando Tailwind CSS
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -93,7 +91,9 @@ export const debounce = (func: (...args: any[]) => void, delay: number) => {
   };
 };
 
-// Saber tamanho da imagem
+// Tamanho da imagem
+export type AspectRatioKey = keyof typeof aspectRatioOptions;
+
 export const getImageSize = (
   type: string,
   image: any,

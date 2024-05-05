@@ -105,7 +105,7 @@
 /* Tailwind Styles */
 @layer utilities {
   .wrapper {
-    @apply mx-auto h-full w-full text-dark-400 p-16-regular px-6 py-16 lg:px-32;
+    @apply mx-auto h-full w-full text-dark-400 p-16-regular px-6 py-16 lg:pl-32;
   }
   
   .gradient-text {
@@ -125,6 +125,10 @@
   /* 44 */
   .h1-semibold {
     @apply text-[36px] font-semibold sm:text-[44px] leading-[120%] sm:leading-[56px];
+  }
+
+  .h3-semibold {
+    @apply text-[24px] font-semibold md:text-[30px] leading-[140%];
   }
 
   /* 36 */
