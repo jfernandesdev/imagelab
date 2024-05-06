@@ -9,6 +9,7 @@ import { Form } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { CustomField } from "@/components/shared/CustomField"
+import MediaUploader from "@/components/shared/MediaUploader"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
@@ -180,24 +181,41 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
           </div>
         )}
 
-      <div className="flex flex-col gap-4 md:flex-row">
-        <Button
-          type="button"
-          className="submit-button capitalize"
-          disabled={isTransforming || newTransformation === null}
-          onClick={onTransformHandler}
-        >
-         {isTransforming ? 'Transformando...' : 'Aplicar transformação'}
-        </Button>
+        <div className="media-uploader-field">
+          <CustomField
+            control={form.control}
+            name="publicId"
+            className="flex size-full flex-col" 
+            render={({ field }) => (
+              <MediaUploader 
+                onValueChange={field.onChange}
+                setImage={setImage}
+                publicId={field.value}
+                image={image}
+                type={type}
+              />  
+            )}
+          />
+        </div>
 
-        <Button
-          type="submit"
-          className="submit-button capitalize"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Enviando...' : 'Salvar imagem'}
-        </Button>
-      </div>
+        <div className="flex flex-col gap-4 md:flex-row">
+          <Button
+            type="button"
+            className="submit-button capitalize"
+            disabled={isTransforming || newTransformation === null}
+            onClick={onTransformHandler}
+          >
+          {isTransforming ? 'Transformando...' : 'Aplicar transformação'}
+          </Button>
+
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Enviando...' : 'Salvar imagem'}
+          </Button>
+        </div>
       </form>
     </Form>
   )
