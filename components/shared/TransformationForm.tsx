@@ -8,13 +8,16 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+
 import { CustomField } from "@/components/shared/CustomField"
 import MediaUploader from "@/components/shared/MediaUploader"
+import TransformedImage from "@/components/shared/TransformedImage"
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
+import { updateCredits } from "@/lib/actions/user.actions"
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
 import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
-import TransformedImage from "./TransformedImage"
 
 export const formSchema = z.object({
   title: z.string(),
@@ -34,7 +37,6 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
   const [transformationConfig, setTransformationConfig] = useState(config);
   const [isPending, startTransition] = useTransition();
-
 
   const initialValues = data && action === 'Update' ? {
     title: data?.title,
@@ -80,7 +82,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     return onChangeField(value);
   };
 
-  // TODO
+  // Decrementar um crédito em cada transformação
   const onTransformHandler = async () => {
     setIsTransforming(true);
     setTransformationConfig(
@@ -90,7 +92,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     setNewTransformation(null);
 
     startTransition(async () => {
-      // TODO: await updateCredits(userId, creditFee);
+      await updateCredits(userId, -1);
     });
 
 
