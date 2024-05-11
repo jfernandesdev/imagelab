@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
 import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
+import TransformedImage from "./TransformedImage"
 
 export const formSchema = z.object({
   title: z.string(),
@@ -75,7 +76,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         }
       }))
     }, 1000)();
-    
+
     return onChangeField(value);
   };
 
@@ -145,7 +146,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
               formLabel={type === 'remove' ? "Objeto para remover" : "Objeto para recolorir"}
               className="w-full"
               render={(({ field }) => (
-                <Input 
+                <Input
                   value={field.value}
                   className="input-field"
                   onChange={(e) => onInputChangeHandler(
@@ -185,19 +186,28 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
           <CustomField
             control={form.control}
             name="publicId"
-            className="flex size-full flex-col" 
+            className="flex size-full flex-col"
             render={({ field }) => (
-              <MediaUploader 
+              <MediaUploader
                 onValueChange={field.onChange}
                 setImage={setImage}
                 publicId={field.value}
                 image={image}
                 type={type}
-              />  
+              />
             )}
           />
-        </div>
 
+          <TransformedImage 
+            image={image}
+            type={type}
+            title={form.getValues().title}
+            isTransforming={isTransforming}
+            setIsTransforming={setIsTransforming}
+            transformationConfig={transformationConfig}
+
+          />
+        </div>
         <div className="flex flex-col gap-4 md:flex-row">
           <Button
             type="button"
@@ -205,7 +215,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
             disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
           >
-          {isTransforming ? 'Transformando...' : 'Aplicar transformação'}
+            {isTransforming ? 'Transformando...' : 'Aplicar transformação'}
           </Button>
 
           <Button

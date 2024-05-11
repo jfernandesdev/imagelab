@@ -79,7 +79,7 @@ const MediaUploader = ({ onValueChange, setImage, image, publicId, type }: IMedi
               <div className="media-uploader_cta" onClick={() => open()}>
                 <div className="media-uploader_cta-image">
                   <Image 
-                    src="/assets/icons/add.svg"
+                    src="/assets/icons/plus.svg"
                     alt="Adicionar Imagem"
                     width={24}
                     height={24}
