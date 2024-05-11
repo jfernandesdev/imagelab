@@ -1,4 +1,4 @@
-"use serve";
+"use server";
 
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database/mongoose";
@@ -28,7 +28,6 @@ export async function addImage({ image, userId, path }: AddImageParams) {
     const newImage = await Image.create({
       ...image,
       author: author._id,
-
     })
 
     revalidatePath(path);
