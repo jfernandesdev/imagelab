@@ -27,7 +27,7 @@ module.exports = {
           100: "#F4F7FE",
           200: "#BCB6FF",
           400: "#868CFF",
-          500: "#9747FF",
+          500: "#6C63FF",
           600: "#4318FF",
         },
         dark: {
@@ -78,6 +78,7 @@ module.exports = {
       backgroundImage: {
         "purple-gradient": "url('/assets/images/gradient-bg.svg')",
         banner: "url('/assets/images/banner-bg.png')",
+        "transparent-squares": "url('/assets/images/transparent-squares.jpg')",
       },
       borderRadius: {
         lg: "var(--radius)",

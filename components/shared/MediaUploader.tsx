@@ -58,9 +58,7 @@ const MediaUploader = ({ onValueChange, setImage, image, publicId, type }: IMedi
       onError={onUploadErrorHandler}
     >
       {({ open }) => (
-        <div className="flex flex-col gap-4">
-            <h3 className="h3-bold text-dark-600">Original</h3>
-
+        <div>
             {publicId ? (
               <>
                 <div className="cursor-pointer overflow-hidden rounded-[10px]">

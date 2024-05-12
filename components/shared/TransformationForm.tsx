@@ -19,8 +19,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { addImage, updateImage } from "@/lib/actions/image.actions"
 import { updateCredits } from "@/lib/actions/user.actions"
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
-import { aspectRatioOptions, defaultValues, transformationTypes } from "@/constants"
+import { aspectRatioOptions, creditFee, defaultValues, transformationTypes } from "@/constants"
 import { useRouter } from "next/navigation"
+import { InsufficientCreditsModal } from "./InsufficientCreditsModal"
 
 export const formSchema = z.object({
   title: z.string(),
@@ -40,7 +41,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
   const [transformationConfig, setTransformationConfig] = useState(config);
   const [isPending, startTransition] = useTransition();
-  
+
   const router = useRouter();
 
   const initialValues = data && action === 'Update' ? {
@@ -98,7 +99,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     setNewTransformation(null);
 
     startTransition(async () => {
-      await updateCredits(userId, -1);
+      await updateCredits(userId, creditFee);
     });
 
     setIsTransforming(false);
@@ -113,7 +114,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
-    if(data || image) {
+    if (data || image) {
       const transformationUrl = getCldImageUrl({
         width: image?.width,
         height: image?.height,
@@ -135,15 +136,15 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         color: values.color,
       }
 
-      if(action === "Add") {
+      if (action === "Add") {
         try {
           const newImage = await addImage({
             image: imageData,
-            userId, 
+            userId,
             path: '/'
           });
 
-          if(newImage) {
+          if (newImage) {
             form.reset();
             setImage(data);
             router.push(`/transformations/${newImage._id}`);
@@ -179,82 +180,87 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <CustomField
-          control={form.control}
-          name="title"
-          formLabel="Título da Imagem"
-          className="w-full"
-          render={({ field }) => (
-            <Input {...field} className="input-field" />
-          )}
-        />
 
-        {type === 'fill' && (
+        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
+
+        <div className="prompt-field">
           <CustomField
             control={form.control}
-            name="aspectRatio"
-            formLabel="Proporção da tela"
+            name="title"
+            formLabel="Título da Imagem"
             className="w-full"
             render={({ field }) => (
-              <Select onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}>
-                <SelectTrigger className="select-field">
-                  <SelectValue placeholder="Proporção da tela" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.keys(aspectRatioOptions).map((key) => (
-                    <SelectItem key={key} value={key} className="select-item">
-                      {aspectRatioOptions[key as AspectRatioKey].label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Input {...field} className="input-field" />
             )}
           />
-        )}
 
-        {(type === 'remove' || type === 'recolor') && (
-          <div className="prompt-field">
+          {type === 'fill' && (
             <CustomField
               control={form.control}
-              name="prompt"
-              formLabel={type === 'remove' ? "Objeto para remover" : "Objeto para recolorir"}
+              name="aspectRatio"
+              formLabel="Proporção da tela"
               className="w-full"
-              render={(({ field }) => (
-                <Input
-                  value={field.value}
-                  className="input-field"
-                  onChange={(e) => onInputChangeHandler(
-                    'prompt',
-                    e.target.value,
-                    type,
-                    field.onChange
-                  )}
-                />
-              ))}
+              render={({ field }) => (
+                <Select onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}>
+                  <SelectTrigger className="select-field">
+                    <SelectValue placeholder="Proporção da tela" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(aspectRatioOptions).map((key) => (
+                      <SelectItem key={key} value={key} className="select-item">
+                        {aspectRatioOptions[key as AspectRatioKey].label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             />
+          )}
 
-            {type === 'recolor' && (
+          {(type === 'remove' || type === 'recolor') && (
+            <>
               <CustomField
                 control={form.control}
-                name="color"
-                formLabel={"Cor de substituição"}
+                name="prompt"
+                formLabel={type === 'remove' ? "Objeto para remover" : "Objeto para recolorir"}
                 className="w-full"
                 render={(({ field }) => (
                   <Input
                     value={field.value}
                     className="input-field"
                     onChange={(e) => onInputChangeHandler(
-                      'color',
+                      'prompt',
                       e.target.value,
-                      'recolor',
+                      type,
                       field.onChange
                     )}
                   />
                 ))}
               />
-            )}
-          </div>
-        )}
+
+              {type === 'recolor' && (
+                <CustomField
+                  control={form.control}
+                  name="color"
+                  formLabel={"Cor de substituição"}
+                  className="w-full"
+                  render={(({ field }) => (
+                    <Input
+                      value={field.value}
+                      className="input-field"
+                      onChange={(e) => onInputChangeHandler(
+                        'color',
+                        e.target.value,
+                        'recolor',
+                        field.onChange
+                      )}
+                    />
+                  ))}
+                />
+              )}
+            </>
+          )}
+        </div>
 
         <div className="media-uploader-field">
           <CustomField
@@ -272,7 +278,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
             )}
           />
 
-          <TransformedImage 
+          <TransformedImage
             image={image}
             type={type}
             title={form.getValues().title}

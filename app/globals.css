@@ -128,7 +128,7 @@
   }
 
   .h3-semibold {
-    @apply text-[24px] font-semibold md:text-[30px] leading-[140%];
+    @apply text-[24px] font-medium md:text-[30px] leading-[140%];
   }
 
   /* 36 */
@@ -197,7 +197,7 @@
   }
 
   .input-field {
-    @apply rounded-[16px] border-2 border-purple-200/20 shadow-sm shadow-purple-200/15 text-dark-600 disabled:opacity-100 p-16-semibold h-[50px] md:h-[54px] focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+    @apply rounded-[8px] border border-purple-200/20 text-dark-600 disabled:opacity-100 p-16-regular h-[42px] md:h-[42px] focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
   }
 
   .search-field {
@@ -205,11 +205,11 @@
   }
 
   .submit-button {
-    @apply bg-purple-gradient bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px];
+    @apply bg-purple-gradient bg-cover rounded-full py-4 px-4 p-16-semibold h-[48px] w-full md:h-[48px];
   }
 
   .select-field {
-    @apply w-full border-2 border-purple-200/20 shadow-sm shadow-purple-200/15 rounded-[16px] h-[50px] md:h-[54px] text-dark-600 p-16-semibold disabled:opacity-100 placeholder:text-dark-400/50 px-4 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent focus-visible:ring-0 focus-visible:outline-none !important;
+    @apply w-full border border-purple-200/20 rounded-[8px] h-[42px] md:h-[42px] text-dark-600 p-16-regular disabled:opacity-100 placeholder:text-dark-400/50 px-4 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent focus-visible:ring-0 focus-visible:outline-none !important;
   }
 
   .select-trigger {
@@ -264,7 +264,7 @@
   }
 
   .transformation-original_image {
-    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
+    @apply h-fit min-h-80 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
   }
 
   /* Collection Component */
@@ -290,15 +290,47 @@
 
   /* MediaUploader Component */
   .media-uploader_cldImage {
-    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover;
+    @apply h-fit min-h-80 max-h-[60vh] origin-top-left w-full rounded-[10px] border-2 border-dashed bg-purple-100/20 object-contain;
+
+    background-image: repeating-conic-gradient(#FFF 0 25%, transparent 0 50%);
+    background-size: 28px 28px;
   }
 
   .media-uploader_cta {
-    @apply flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-dashed bg-white/50;
+    @apply flex-center flex h-80 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-dashed bg-white/50;
   }
 
   .media-uploader_cta-image {
     @apply rounded-full border-2 border-blue-500 p-2 shadow-sm shadow-purple-200/50;
+  }
+
+   /* TransformationForm Component */
+  .prompt-field {
+    @apply flex flex-col gap-5 lg:flex-row lg:gap-5;
+  }
+
+  .media-uploader-field {
+    @apply grid h-fit min-h-[200px] grid-cols-1 gap-5 md:grid-cols-2;
+  }
+
+  /* TransformedImage Component */
+  .download-btn {
+    @apply p-14-medium mt-2 flex items-center gap-2 px-2;
+  }
+
+  .transformed-image {
+    @apply h-fit max-h-[60vh] min-h-72 w-full rounded-[10px] border object-contain;
+
+    background-image: repeating-conic-gradient(#FFF 0 25%, transparent 0 50%);
+    background-size: 28px 28px;
+  }
+
+  .transforming-loader {
+    @apply flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90;
+  }
+
+  .transformed-placeholder {
+    @apply flex-center p-14-medium h-full min-h-72 flex-col gap-5 rounded-[16px] border bg-purple-100/20 shadow-inner;
   }
 
   /* Navbar Component */
@@ -378,32 +410,6 @@
 
   .tooltip- hidden {
     @apply hidden;
-  }
-
-  /* TransformationForm Component */
-  .prompt-field {
-    @apply flex flex-col gap-5 lg:flex-row lg:gap-10;
-  }
-
-  .media-uploader-field {
-    @apply grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2;
-  }
-
-  /* TransformedImage Component */
-  .download-btn {
-    @apply p-14-medium mt-2 flex items-center gap-2 px-2;
-  }
-
-  .transformed-image {
-    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover;
-  }
-
-  .transforming-loader {
-    @apply flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90;
-  }
-
-  .transformed-placeholder {
-    @apply flex-center p-14-medium h-full min-h-72 flex-col gap-5 rounded-[16px] border bg-purple-100/20 shadow-inner;
   }
 }
 

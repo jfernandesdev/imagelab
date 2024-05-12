@@ -20,10 +20,8 @@ const TransformedImage = (
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div>
       <div className="flex-between items-center">
-        <h3 className="h3-bold text-dark-600">Transformada</h3>
-
         {hasDownload && (
           <button className="download-btn" onClick={handleDownload}>
             <Image 
