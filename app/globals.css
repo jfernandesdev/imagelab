@@ -122,9 +122,13 @@
   }
 
   /* Typography */
+  .h1-medium {
+    @apply  font-medium text-[24px] md:text-[42px] leading-[140%];
+  }
+
   /* 44 */
   .h1-semibold {
-    @apply text-[36px] font-semibold sm:text-[44px] leading-[120%] sm:leading-[56px];
+    @apply text-[36px] font-semibold sm:text-[24px] leading-[120%] sm:leading-[24px];
   }
 
   .h3-semibold {
@@ -238,11 +242,27 @@
 
   /* Home Page */
   .home {
-    @apply sm:flex-center hidden h-72 flex-col gap-4 rounded-[20px] border bg-banner bg-cover bg-no-repeat p-10 shadow-inner;
+    @apply flex-col md:flex-row flex items-center justify-between h-48 md:h-64 md:gap-8 rounded-[20px] border bg-banner bg-cover bg-no-repeat p-6 md:p-20 shadow-inner;
+  }
+
+  .home img {
+    @apply w-10/12 md:w-auto ml-24 mt-[-36px] md:ml-0 md:mt-0;
   }
 
   .home-heading {
-    @apply h1-semibold max-w-[500px] flex-wrap text-center text-white shadow-sm;
+    @apply h1-medium text-white;
+  }
+
+  .home-heading br {
+    @apply hidden md:flex;
+  }
+
+  .home-heading span {
+    @apply relative;
+  }
+
+  .home-heading span img {
+    @apply hidden md:absolute md:flex right-[-32px] bottom-9;
   }
 
   /* Profile Page */
@@ -386,7 +406,7 @@
   }
 
   .imgActive {
-    filter: brightness(0) saturate(100%) invert(38%) sepia(85%) saturate(5050%) hue-rotate(251deg) brightness(107%) contrast(101%);
+    filter: brightness(0) saturate(100%) invert(51%) sepia(93%) saturate(4947%) hue-rotate(229deg) brightness(104%) contrast(101%);
   }
 
   .tooltip {

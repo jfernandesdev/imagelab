@@ -77,7 +77,7 @@ module.exports = {
       },
       backgroundImage: {
         "purple-gradient": "url('/assets/images/gradient-bg.svg')",
-        banner: "url('/assets/images/banner-bg.png')",
+        banner: "url('/assets/images/purple-gradient-banner.svg')",
         "transparent-squares": "url('/assets/images/transparent-squares.jpg')",
       },
       borderRadius: {
