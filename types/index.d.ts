@@ -99,6 +99,12 @@ declare type SearchParamProps = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+declare type GetAllImages = {
+  limit?: number;
+  page?: number;
+  searchQuery?: string;
+};
+
 declare type TransformationFormProps = {
   action: "Add" | "Update";
   userId: string;
