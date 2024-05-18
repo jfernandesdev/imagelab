@@ -101,15 +101,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     startTransition(async () => {
       await updateCredits(userId, creditFee);
     });
-
-    setIsTransforming(false);
   };
-
-  useEffect(() => {
-    if (image && (type === 'restore' || type === 'removeBackground')) {
-      setNewTransformation(transformationType.config)
-    }
-  }, [image, transformationType.config, type]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
@@ -177,6 +169,12 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     setIsSubmitting(false);
   };
 
+  useEffect(() => {
+    if (image && (type === 'restore' || type === 'removeBackground')) {
+      setNewTransformation(transformationType.config)
+    }
+  }, [image, transformationType.config, type]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -201,7 +199,10 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
               formLabel="Proporção da tela"
               className="w-full"
               render={({ field }) => (
-                <Select onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}>
+                <Select 
+                  onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}
+                  value={field.value}
+                >
                   <SelectTrigger className="select-field">
                     <SelectValue placeholder="Proporção da tela" />
                   </SelectTrigger>
@@ -224,7 +225,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                 name="prompt"
                 formLabel={type === 'remove' ? "Objeto para remover" : "Objeto para recolorir"}
                 className="w-full"
-                render={(({ field }) => (
+                render={({ field }) => (
                   <Input
                     value={field.value}
                     className="input-field"
@@ -235,7 +236,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                       field.onChange
                     )}
                   />
-                ))}
+                )}
               />
 
               {type === 'recolor' && (
@@ -290,19 +291,19 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         <div className="flex flex-col gap-4 md:flex-row">
           <Button
             type="button"
-            className="submit-button capitalize"
+            className="submit-button"
             disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
           >
-            {isTransforming ? 'Transformando...' : 'Aplicar transformação'}
+            {isTransforming ? 'Transformando...' : transformationType?.labelButton}
           </Button>
 
           <Button
             type="submit"
             className="submit-button capitalize"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isTransforming}
           >
-            {isSubmitting ? 'Enviando...' : 'Salvar imagem'}
+            {isSubmitting ? 'Enviando...' : 'Salvar transformação'}
           </Button>
         </div>
       </form>

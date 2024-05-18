@@ -47,7 +47,7 @@ export const Collection = ({
   };
 
   return (
-    <>
+    <div className="relative w-full">
       <div className="collection-heading">
         {hasSearch && <Search />}
       </div>
@@ -66,10 +66,10 @@ export const Collection = ({
 
       {totalPages > 1 && (
         <Pagination className="mt-10">
-          <PaginationContent className="flex w-full">
+          <PaginationContent className="pagination-content">
             <Button
-              disabled={Number(page) <= 1}
               className="collection-btn"
+              disabled={Number(page) <= 1}
               onClick={() => onPageChange("prev")}
             >
               <PaginationPrevious
@@ -78,14 +78,14 @@ export const Collection = ({
               />
             </Button>
 
-            <p className="flex-center p-16-medium w-fit flex-1">
+            <p className="flex-center p-16-medium w-full flex-1 md:hidden">
               {page} / {totalPages}
             </p>
 
             <Button
-              className="button w-32 bg-purple-gradient bg-cover text-white"
-              onClick={() => onPageChange("next")}
+              className="collection-btn"
               disabled={Number(page) >= totalPages}
+              onClick={() => onPageChange("next")}
             >
               <PaginationNext 
                 title="Próxima"
@@ -95,7 +95,7 @@ export const Collection = ({
           </PaginationContent>
         </Pagination>
       )}
-    </>
+    </div>
   );
 };
 
