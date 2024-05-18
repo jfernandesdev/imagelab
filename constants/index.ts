@@ -50,6 +50,7 @@ export const transformationTypes = {
   restore: {
     type: "restore",
     title: "Restaurar Imagem",
+    transformedLabel: "Restauração de Imagem",
     subTitle: "Refine imagens removendo ruídos e imperfeições.",
     config: { restore: true },
     icon: "image-broken.svg",
@@ -57,6 +58,7 @@ export const transformationTypes = {
   removeBackground: {
     type: "removeBackground",
     title: "Remover Fundo",
+    transformedLabel: "Remoção do fundo",
     subTitle: "Destaque o que realmente importa em suas fotos usando IA.",
     config: { removeBackground: true },
     icon: "camera-slash.svg",
@@ -64,6 +66,7 @@ export const transformationTypes = {
   fill: {
     type: "fill",
     title: "Preenchimento Generativo",
+    transformedLabel: "Preenchimento Generativo",
     subTitle: "Complete espaços vazios com o poder da Inteligência Artificial.",
     config: { fillBackground: true },
     icon: "stars.svg",
@@ -71,6 +74,7 @@ export const transformationTypes = {
   remove: {
     type: "remove",
     title: "Remover Objetos",
+    transformedLabel: "Remoção de Objeto",
     subTitle: "Elimine de forma precisa objetos indesejados de suas fotos.",
     config: {
       remove: { prompt: "", removeShadow: true, multiple: true },
@@ -80,6 +84,7 @@ export const transformationTypes = {
   recolor: {
     type: "recolor",
     title: "Recolorir Objetos",
+    transformedLabel: "Recoloração de Objeto",
     subTitle: "Altere cores de objetos de maneira natural e realista.",
     config: {
       recolor: { prompt: "", to: "", multiple: true },
@@ -89,6 +94,7 @@ export const transformationTypes = {
   crop: {
     type: "crop",
     title: "Recortar Imagem",
+    transformedLabel: "Recorte de Imagem",
     subTitle: "Redimensione suas fotos para se encaixar em qualquer lugar.",
     config: {
       recolor: { prompt: "", to: "", multiple: true },

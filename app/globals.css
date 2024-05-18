@@ -284,7 +284,10 @@
   }
 
   .transformation-original_image {
-    @apply h-fit min-h-80 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
+    @apply h-fit min-h-80 max-h-[60vh] origin-top-left w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain;
+
+    background-image: repeating-conic-gradient(#FFF 0 25%, transparent 0 50%);
+    background-size: 28px 28px;
   }
 
   /* Collection Component */
@@ -405,7 +408,7 @@
     @apply flex size-full w-full gap-4 py-2 h-full rounded-full flex-center cursor-pointer;
   }
 
-  .imgActive {
+  .imgActive, .iconPurple {
     filter: brightness(0) saturate(100%) invert(51%) sepia(93%) saturate(4947%) hue-rotate(229deg) brightness(104%) contrast(101%);
   }
 

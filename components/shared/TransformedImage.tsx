@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import Image from "next/image"
 import { CldImage } from "next-cloudinary"
@@ -12,9 +14,11 @@ const TransformedImage = (
     isTransforming, 
     setIsTransforming, 
     transformationConfig,
-    hasDownload = false 
+    hasDownload = false,
+    displayTitle = false
   }: TransformedImageProps) => {
     
+  // TODO: implementar baixa imagem
   const handleDownload = () => {
     
   }
@@ -22,8 +26,12 @@ const TransformedImage = (
   return (
     <div>
       <div className="flex-between items-center">
+
+        {displayTitle && (<h3 className="p-18-semibold text-dark-600 mb-4">Transformada:</h3>)}
+
         {hasDownload && (
           <button className="download-btn" onClick={handleDownload}>
+            <span>Download</span>
             <Image 
               src="/assets/icons/download.svg"
               alt="Download"
