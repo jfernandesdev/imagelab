@@ -27,14 +27,13 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
               <Image
                 src={`/assets/icons/${transformation.icon}`}
                 alt={transformation.title}
-                width={12}
-                height={12}
-                className="iconPurple mt-[-5px]"
+                width={14}
+                height={14}
+                className="iconPurple"
               />
             )}
 
             {transformation?.transformedLabel}
-
           </p>
         </div>
 
