@@ -31,9 +31,9 @@ const TransformedImage = (
 
   return (
     <div>
-      <div className="flex-between items-center">
+      <div className={`flex-between ${displayTitle && ' mb-4'}`}>
 
-        {displayTitle && (<h3 className="p-18-semibold text-dark-600 mb-4">Transformada:</h3>)}
+        {displayTitle && (<h3 className="p-18-semibold text-dark-600">Transformada:</h3>)}
 
         {hasDownload && (
           <button className="download-btn" onClick={handleDownload}>
@@ -43,7 +43,6 @@ const TransformedImage = (
               alt="Download"
               width={24}
               height={24}
-              className="pb-[6px]"
             />
           </button>
         )}

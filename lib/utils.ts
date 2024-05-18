@@ -154,3 +154,37 @@ export const deepMergeObjects = (obj1: any, obj2: any) => {
 
   return output;
 };
+
+// Transformar cor em hexadecimal
+export const hexColor = (color: string) => {
+  // Verifica se a cor já está em formato hexadecimal
+  if (/^#[0-9A-F]{6}$/i.test(color)) {
+    return color;
+  }
+
+  // Verifica se estamos no ambiente do navegador
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return color;
+  }
+
+  // Cria um elemento temporário para aplicar a cor
+  let tempElement = document.createElement('div');
+  tempElement.style.color = color;
+  document.body.appendChild(tempElement);
+
+  // Obtém a cor computada em formato RGB
+  let computedColor = getComputedStyle(tempElement).color;
+  document.body.removeChild(tempElement);
+
+  // Converte a cor RGB para hexadecimal
+  let rgbMatch = computedColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+  if (rgbMatch) {
+    let r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0');
+    let g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0');
+    let b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0');
+    return `#${r}${g}${b}`;
+  }
+
+  // Se a cor não for válida, retorna a cor recebida
+  return color;
+}

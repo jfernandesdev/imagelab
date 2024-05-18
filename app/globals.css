@@ -284,7 +284,7 @@
   }
 
   .transformation-original_image {
-    @apply h-fit min-h-80 max-h-[60vh] origin-top-left w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain;
+    @apply h-fit min-h-80 max-h-[60vh] origin-top-left w-full rounded-[10px] border bg-purple-100/20 object-contain;
 
     background-image: repeating-conic-gradient(#FFF 0 25%, transparent 0 50%);
     background-size: 28px 28px;
@@ -305,6 +305,15 @@
 
   .collection-card {
     @apply flex flex-1 relative cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-purple-200/15 bg-white shadow-xl shadow-purple-200/10 transition-all hover:shadow-purple-200/20;
+    overflow: hidden; 
+  }
+
+  .collection-card img {
+    transition: transform 0.3s ease;
+  }
+
+  .collection-card:hover img {
+    transform: scale(1.1);
   }
 
   .collection-icon-type {
@@ -338,7 +347,7 @@
 
   /* TransformedImage Component */
   .download-btn {
-    @apply p-14-medium mt-2 flex items-center gap-2 px-2;
+    @apply p-14-medium flex items-center gap-2 px-2;
   }
 
   .transformed-image {
@@ -384,7 +393,7 @@
 
   /* Sidebar Component */
   .sidebar {
-    @apply hidden h-screen fixed w-[70px] bg-white py-5 px-3 shadow-md shadow-purple-200/50 rounded-full lg:flex;
+    @apply hidden h-screen fixed w-[70px] bg-white py-5 px-3 shadow-md shadow-purple-200/50 rounded-full lg:flex z-50;
   }
 
   .sidebar {

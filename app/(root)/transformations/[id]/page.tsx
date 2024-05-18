@@ -20,9 +20,9 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
       <Header title={image.title} />
 
       <section className="mt-2 flex flex-wrap gap-4">
-        <div className="p-14-medium flex gap-2">
-          <p className="text-dark-600">Transformação:</p>
-          <p className="flex gap-2 text-purple-500 opacity-80 whitespace-nowrap">
+        <div className="p-14-medium flex gap-2 items-center">
+          <p className="text-dark-600">Transformação aplicada:</p>
+          <p className="flex gap-2 text-purple-500 whitespace-nowrap">
             {transformation && (
               <Image
                 src={`/assets/icons/${transformation.icon}`}
@@ -37,20 +37,10 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
           </p>
         </div>
 
-        {image.prompt && (
-          <>
-            <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="p-14-medium flex gap-2 ">
-              <p className="text-dark-600">Prompt:</p>
-              <p className=" capitalize text-purple-500">{image.prompt}</p>
-            </div>
-          </>
-        )}
-
         {image.color && (
           <>
             <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="p-14-medium flex gap-2">
+            <div className="p-14-medium flex items-center gap-2">
               <p className="text-dark-600">Cor:</p>
               <p className=" capitalize text-purple-500">{image.color}</p>
             </div>
@@ -60,7 +50,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         {image.aspectRatio && (
           <>
             <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="p-14-medium flex gap-2">
+            <div className="p-14-medium flex items-center gap-2">
               <p className="text-dark-600">Dimensão de tela:</p>
               <p className=" capitalize text-purple-500">{image.aspectRatio}</p>
             </div>
