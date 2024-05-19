@@ -8,7 +8,7 @@ interface IHeader {
 const Header = ({ title, subtitle }: IHeader ) => {
   return (
     <>
-      <h3 className="h3-semibold text-dark-600">{title}</h3>
+      <h3 className="h3-semibold text-dark-600 capitalize">{title}</h3>
       {subtitle && <p className="p-16-regular mt-1">{subtitle}</p>}
     </>
   )

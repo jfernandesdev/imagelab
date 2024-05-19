@@ -2,10 +2,13 @@ import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
+import { getImageById } from "@/lib/actions/image.actions";
+
+import { Button } from "@/components/ui/button";
 import Header from "@/components/shared/Header";
 import TransformedImage from "@/components/shared/TransformedImage";
-import { Button } from "@/components/ui/button";
-import { getImageById } from "@/lib/actions/image.actions";
+import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
+
 import { getImageSize } from "@/lib/utils";
 import { transformationTypes } from "@/constants";
 
@@ -19,44 +22,65 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
     <>
       <Header title={image.title} />
 
-      <section className="mt-2 flex flex-wrap gap-4">
-        <div className="p-14-medium flex gap-2 items-center">
-          <p className="text-dark-600">Transformação aplicada:</p>
-          <p className="flex gap-2 text-purple-500 whitespace-nowrap">
-            {transformation && (
-              <Image
-                src={`/assets/icons/${transformation.icon}`}
-                alt={transformation.title}
-                width={14}
-                height={14}
-                className="iconPurple"
-              />
-            )}
+      <section className="flex justify-between flex-col md:flex-row items-start md:items-center gap-2">
+        <div className="flex flex-wrap gap-4">
+          <div className="p-14-medium flex gap-2 items-center">
+            <p className="flex gap-2 text-purple-500 whitespace-nowrap">
+              {transformation && (
+                <Image
+                  src={`/assets/icons/${transformation.icon}`}
+                  alt={transformation.title}
+                  width={14}
+                  height={14}
+                  className="iconPurple"
+                />
+              )}
 
-            {transformation?.transformedLabel}
-          </p>
+              {transformation?.transformedLabel}
+            </p>
+          </div>
+
+          {image.color && (
+            <>
+              <p className="text-dark-400/50">&#x25CF;</p>
+              <div className="p-14-medium flex items-center gap-2">
+                <p className=" capitalize text-purple-500">{image.color}</p>
+              </div>
+            </>
+          )}
+
+          {image.aspectRatio && (
+            <>
+              <p className="text-dark-400/50">&#x25CF;</p>
+              <div className="p-14-medium flex items-center gap-2">
+                <p className=" capitalize text-purple-500">{image.aspectRatio}</p>
+              </div>
+            </>
+          )}
         </div>
 
-        {image.color && (
-          <>
-            <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="p-14-medium flex items-center gap-2">
-              <p className="text-dark-600">Cor:</p>
-              <p className=" capitalize text-purple-500">{image.color}</p>
-            </div>
-          </>
-        )}
+        {userId === image.author.clerkId && (
+          <div className="flex gap-2">
+            <Button asChild type="button" className="edit-button">
+              <Link href={`/transformations/${image._id}/update`}>
+                <Image
+                  src={`/assets/icons/pencil-edit.svg`}
+                  alt="Editar"
+                  width={24}
+                  height={24}
+                />
+                <span className={`tooltip tooltip-top`}>
+                  Editar
+                  <span className="tooltip-pointer"></span>
+                </span>
+              </Link>
+            </Button>
 
-        {image.aspectRatio && (
-          <>
-            <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="p-14-medium flex items-center gap-2">
-              <p className="text-dark-600">Dimensão de tela:</p>
-              <p className=" capitalize text-purple-500">{image.aspectRatio}</p>
-            </div>
-          </>
+            <DeleteConfirmation imageId={image._id} />
+          </div>
         )}
       </section>
+
 
       <section className="mt-5 border-t border-dark-400/15">
         <div className="transformation-grid">
@@ -84,16 +108,6 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
             displayTitle
           />
         </div>
-
-        {userId === image.author.clerkId && (
-          <div className="mt-4 space-y-4">
-            <Button asChild type="button" className="submit-button capitalize">
-              <Link href={`/transformations/${image._id}/update`}>
-                Update Image
-              </Link>
-            </Button>
-          </div>
-        )}
       </section>
     </>
   );

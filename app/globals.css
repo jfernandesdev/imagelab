@@ -100,7 +100,7 @@
 }
 
 .root-container {
-  @apply flex-1 overflow-auto py-8 lg:max-h-screen;
+  @apply flex-1 overflow-auto py-8 lg:max-h-screen pt-4;
 }
 
 /* Tailwind Styles */
@@ -211,6 +211,22 @@
 
   .submit-button {
     @apply bg-purple-gradient bg-cover rounded-full py-4 px-4 p-16-semibold h-[48px] w-full md:h-[48px];
+  }
+
+  .edit-button {
+    @apply bg-purple-gradient bg-cover rounded-full h-12 w-12 p-0 relative;
+  }
+
+  .edit-button:hover .tooltip, .remove-button:hover .tooltip {
+    @apply tooltip-show;
+  }
+
+  .remove-button {
+    @apply bg-transparent rounded-full h-12 w-12 p-0 border border-red-500 hover:bg-red-500 relative !important;
+  }
+
+  .remove-button:hover > img {
+     filter: brightness(100);
   }
 
   .select-field {
@@ -439,7 +455,7 @@
   .tooltip {
     @apply hidden group-hover:block absolute top-1/2 left-full ml-1 transform -translate-y-1/2 bg-black text-white text-xs py-1 px-2 rounded whitespace-nowrap outline-none;
   }
-  
+ 
   .tooltip-pointer {
     @apply absolute w-0 h-0 border-2 border-solid border-transparent border-black right-full top-1/2 transform -translate-y-1/2;
 
@@ -449,6 +465,20 @@
     border-bottom-color: transparent;
     border-top-color: transparent; 
     border-right-color: black;
+  }
+
+  .tooltip-top {
+    left: 50%;
+    top: -30px;
+    transform: translateX(-55%);
+  }
+
+  .tooltip-top .tooltip-pointer {
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: black;
+    border-right-color: transparent;
+    top: 100%;
   }
 
   .tooltip-show {
