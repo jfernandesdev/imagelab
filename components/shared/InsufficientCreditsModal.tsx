@@ -1,7 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { startTransition, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { updateCredits } from "@/lib/actions/user.actions";
+import { useToast } from "@/components/ui/use-toast"
 
 import {
   AlertDialog,
@@ -14,11 +17,45 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export const InsufficientCreditsModal = () => {
+export const InsufficientCreditsModal = ({ userId }: { userId: string }) => {
   const router = useRouter();
+  const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleAddCredits = async () => {
+    try {
+      startTransition(async () => {
+        await updateCredits(userId, 2);
+      });
+  
+      toast({
+        title: "Sucesso!",
+        description: "Você ganhou +2 créditos gratuitos.",
+  
+        duration: 5000,
+        className: "success-toast"
+      });
+  
+      router.push('/credit');
+    } catch (error) {
+      toast({
+        title: "Ops! Crédito não adicionado.",
+        description: "Por favor, tente novamente.",
+
+        duration: 5000,
+        className: "error-toast"
+      });
+
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
 
   return (
-    <AlertDialog defaultOpen>
+    <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <div className="flex-between">
@@ -60,8 +97,8 @@ export const InsufficientCreditsModal = () => {
            Não, obrigado
           </AlertDialogCancel>
           <AlertDialogAction
-            className="button w-full bg-purple-gradient  bg-cover"
-            onClick={() => router.push("/credit")}
+            className="button w-full bg-purple-gradient bg-cover"
+            onClick={handleAddCredits}
           >
             Ver anúncio
           </AlertDialogAction>

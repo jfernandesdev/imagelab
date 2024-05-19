@@ -88,5 +88,6 @@ export async function updateCredits(userId: string, creditFee: number) {
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
     handleError(error);
+    throw error;
   }
 }

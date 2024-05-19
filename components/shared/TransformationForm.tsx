@@ -179,7 +179,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
-        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
+        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal userId={userId} />}
 
         <div className="prompt-field">
           <CustomField

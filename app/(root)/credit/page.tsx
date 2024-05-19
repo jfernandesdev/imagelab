@@ -21,7 +21,7 @@ const Credit = async ({ searchParams }: SearchParamProps) => {
       <Header title="Meus créditos" />
 
       <section className="profile">
-        <div className="profile-balance flex items-center gap-6">
+        <div className="profile-balance flex items-center gap-6 relative">
           <Image
             src="/assets/icons/pig-credit.svg"
             alt="créditos"
@@ -32,6 +32,16 @@ const Credit = async ({ searchParams }: SearchParamProps) => {
             <p className="p-14-medium md:p-16-medium">Créditos disponíveis</p>
             <h2 className="h2-bold text-dark-600">{user.creditBalance}</h2>
           </div>
+
+          <button className="add-credit-btn" disabled title="Indisponível no momento">
+            <Image
+              src="/assets/icons/coins.svg"
+              alt="Adicionar crédito"
+              width={24}
+              height={24}
+            />
+            <span>Adicionar crédito</span>
+          </button>
         </div>
 
         <div className="profile-image-manipulation flex items-center gap-6">

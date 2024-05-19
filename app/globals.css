@@ -283,6 +283,10 @@
   }
 
   /* Profile Page */
+  .add-credit-btn {
+    @apply p-14-medium flex items-center gap-2 px-2 absolute bottom-2 right-2 opacity-50;
+  }
+
   .profile {
     @apply mt-5 flex flex-col gap-5 sm:flex-row md:mt-8 md:gap-10;
   }
@@ -424,7 +428,7 @@
 
   /* Sidebar Component */
   .sidebar {
-    @apply hidden h-screen fixed w-[70px] bg-white py-5 px-3 shadow-md shadow-purple-200/50 rounded-full lg:flex z-50;
+    @apply hidden h-screen fixed w-[70px] bg-white py-5 px-3 shadow-md shadow-purple-200/50 rounded-full lg:flex z-10;
   }
 
   .sidebar {
