@@ -35,9 +35,9 @@ export const navLinks = [
     icon: "/assets/icons/crop.svg",
   },
   {
-    label: "Meu perfil",
-    route: "/profile",
-    icon: "/assets/icons/profile.svg",
+    label: "Meus créditos",
+    route: "/credit",
+    icon: "/assets/icons/coins.svg",
   },
   {
     label: "Sair",

@@ -100,7 +100,7 @@
 }
 
 .root-container {
-  @apply flex-1 overflow-auto py-8 lg:max-h-screen pt-4;
+  @apply flex-1 overflow-auto py-8 lg:max-h-screen pt-8;
 }
 
 /* Tailwind Styles */
