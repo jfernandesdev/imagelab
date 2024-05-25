@@ -90,7 +90,7 @@ export const transformationTypes = {
     title: "Recolorir Objetos",
     transformedLabel: "Recoloração de Objeto",
     labelButton: "Recolorir Objeto",
-    subTitle: "Altere cores de objetos de maneira natural e realista.",
+    subTitle: "Usa IA generativa para recolorir partes da sua imagem.",
     config: {
       recolor: { prompt: "", to: "", multiple: true },
     },
@@ -103,7 +103,7 @@ export const transformationTypes = {
     labelButton: "Recortar Imagem",
     subTitle: "Redimensione suas fotos para se encaixar em qualquer lugar.",
     config: {
-      recolor: { prompt: "", to: "", multiple: true },
+      crop: { },
     },
     icon: "crop.svg",
   },
@@ -132,10 +132,10 @@ export const aspectRatioOptions = {
 
 export const defaultValues = {
   title: "",
-  aspectRatio: "",
-  color: "",
+  aspectRatio: "1:1",
+  color: "#000000",
   prompt: "",
-  publicId: "",
+  publicId: ""
 };
 
 export const creditFee = -1;

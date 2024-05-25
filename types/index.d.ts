@@ -67,6 +67,7 @@ declare type Transformations = {
     multiple?: boolean;
   };
   removeBackground?: boolean;
+  crop?: any;
 };
 
 declare type TransformationTypeKey =

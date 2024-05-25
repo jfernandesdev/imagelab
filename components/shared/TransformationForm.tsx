@@ -76,11 +76,13 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   // Campo para descrição do objeto para o prompt/to
   const onInputChangeHandler = (fieldName: string, value: string, type: string, onChangeField: (value: string) => void) => {
     debounce(() => {
+      const newValue = (type === 'recolor' && fieldName === 'color') ? value.replace('#', '') : value;
+
       setNewTransformation((prevState: any) => ({
         ...prevState,
         [type]: {
           ...prevState?.[type],
-          [fieldName === 'prompt' ? 'prompt' : 'to']: value
+          [fieldName === 'prompt' ? 'prompt' : 'to']: newValue
         }
       }))
     }, 1000)();
@@ -92,15 +94,18 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const onTransformHandler = async () => {
     setIsTransforming(true);
 
+    console.log('new transform', newTransformation);
+    console.log('onTransformHandler', transformationConfig);
+
     setTransformationConfig(
       deepMergeObjects(newTransformation, transformationConfig)
     );
 
     setNewTransformation(null);
 
-    startTransition(async () => {
-      await updateCredits(userId, creditFee);
-    });
+    // startTransition(async () => {
+    //   await updateCredits(userId, creditFee);
+    // });
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -229,6 +234,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                   <Input
                     value={field.value}
                     className="input-field"
+                    placeholder="Termos inglês ou português (pt-BR)"
                     onChange={(e) => onInputChangeHandler(
                       'prompt',
                       e.target.value,
@@ -244,19 +250,24 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                   control={form.control}
                   name="color"
                   formLabel={"Cor de substituição"}
-                  className="w-full"
-                  render={(({ field }) => (
-                    <Input
-                      value={field.value}
-                      className="input-field"
-                      onChange={(e) => onInputChangeHandler(
-                        'color',
-                        e.target.value,
-                        'recolor',
-                        field.onChange
-                      )}
-                    />
-                  ))}
+                  className="w-1/2"
+                  render={({ field }) => (
+                    <div className="color-picker-container">
+                      <Input
+                        value={field.value}
+                        type="color"
+                        onChange={(e) =>
+                          onInputChangeHandler(
+                            'color',
+                            e.target.value,
+                            'recolor',
+                            field.onChange
+                          )
+                        }
+                      />
+                      <span className="color-code">{field.value}</span>
+                    </div>
+                  )}
                 />
               )}
             </>

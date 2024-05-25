@@ -27,17 +27,17 @@ const Home = async ({ searchParams }: SearchParamProps) => {
             <Image
               src="/assets/icons/shine.svg"
               alt="ImageLab"
-              height="24"
-              width="24"
+              height={24}
+              width={24}
             />
           </span>
         </h1>
 
         <Image
           src="/assets/images/girl-image-banner.svg"
-          alt="ImageLab"
-          height="400"
-          width="400"
+          alt="Garota com seu gato editando imagens"
+          height={350}
+          width={350}
         />
       </section>
 
