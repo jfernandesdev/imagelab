@@ -10,10 +10,8 @@ import { getUserImages } from "@/lib/actions/image.actions";
 const Home = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
   const { userId } = auth();
-
+  
   if (!userId) redirect("/sign-in");
-
-  // const searchQuery = (searchParams?.query as string) || '';
 
   const user = await getUserById(userId);
   const images = await getUserImages({ page, userId: user._id });
@@ -43,7 +41,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
 
       <section className="sm:mt-12 pb-6">
         <Collection 
-          hasSearch={true}
+          hasSearch={false}
           images={images?.data}
           totalPages={images?.totalPage}
           page={page}

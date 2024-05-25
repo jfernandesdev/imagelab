@@ -109,7 +109,7 @@ const Card = ({ image }: { image: IImage }) => {
         >
         <CldImage
           src={image.publicId}
-          alt={image.title}
+          alt={image?.title}
           width={image.width}
           height={image.height}
           {...image.config}
@@ -126,7 +126,7 @@ const Card = ({ image }: { image: IImage }) => {
                 image.transformationType as TransformationTypeKey
               ].icon
               }`}
-            alt={image.title}
+            alt={image?.title}
             width={18}
             height={18}
           />

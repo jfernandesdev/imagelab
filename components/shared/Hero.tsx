@@ -18,7 +18,7 @@ const Hero = () => {
         </h1>
 
         <p className="text-gray-600 mt-4 md:mt-6">
-          Com recursos avançados de IA como restauração, preenchimento, recoloração e remoção de fundo. Deixe os recursos de Generative IA, LLM e Content-Aware trabalhar a seu favor.
+          Com recursos avançados de IA como restauração, preenchimento, recoloração e remoção de fundo. Deixe os recursos de Generative AI, LLM e Content-Aware trabalhar a seu favor.
         </p>
         <Link href="/sign-in">
           <button className="mt-6 md:mt-8 px-6 py-3 bg-purple-500 hover:bg-purple-gradient text-white text-lg rounded-full flex gap-1 items-center">

@@ -28,14 +28,6 @@ const MediaUploader = ({ onValueChange, setImage, image, publicId, type }: IMedi
     }));
 
     onValueChange(result?.info?.public_id);
-
-    toast({
-      title: "Upload feito com sucesso",
-      description: "1 crédito usado",
-      
-      duration: 5000,
-      className: "success-toast"
-    });
   }
 
   const onUploadErrorHandler = () => {

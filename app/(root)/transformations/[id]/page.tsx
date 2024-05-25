@@ -60,7 +60,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         </div>
 
         {userId === image.author.clerkId && (
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full md:w-auto justify-end ">
             <Button asChild type="button" className="edit-button">
               <Link href={`/transformations/${image._id}/update`}>
                 <Image

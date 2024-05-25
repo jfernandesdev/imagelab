@@ -53,16 +53,21 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     color: data?.color,
     prompt: data?.prompt,
     publicId: data?.publicId,
-  } : {
-      ...defaultValues,
-      color: type === 'recolor' ? '#000000' : '',
-      aspectRatio: type === 'fill' ? '1:1' : ''
-  };
+  } : defaultValues;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues
   })
+
+  const showErrorToast = (title: string, description: string) => {
+    toast({
+      title: title,
+      description: description,
+      duration: 5000,
+      className: "error-toast"
+    });
+  };
 
   // Campo de seleção para proporção da imagem
   const onSelectFieldHandler = (value: string, onChangeField: (value: string) => void) => {
@@ -83,7 +88,9 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   // Campo para descrição do objeto para o prompt/to
   const onInputChangeHandler = (fieldName: string, value: string, type: string, onChangeField: (value: string) => void) => {
     debounce(() => {
-      const newValue = (type === 'recolor' && fieldName === 'color') ? value.replace('#', '') : value;
+      // Remover caracteres especiais, traços, vírgulas, espaços antes e depois
+      const sanitizedValue = value.replace(/[^a-zA-Z0-9 ]/g, '').trim();
+      const newValue = (type === 'recolor' && fieldName === 'color') ? sanitizedValue.replace('#', '') : sanitizedValue;
 
       setNewTransformation((prevState: any) => ({
         ...prevState,
@@ -99,17 +106,70 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
   // Decrementar um crédito em cada transformação
   const onTransformHandler = async () => {
-    setIsTransforming(true);
+    try {
+      setIsTransforming(true);
 
-    setTransformationConfig(
-      deepMergeObjects(newTransformation, transformationConfig)
-    );
+      const values = form.getValues();
 
-    setNewTransformation(null);
+      if (!values.title) {
+        showErrorToast("Campo obrigatório!", "O título da imagem é obrigatório.");
+        return;
+      }
 
-    startTransition(async () => {
-      await updateCredits(userId, creditFee);
-    });
+      if (type === "remove") {
+        if (!values.prompt) {
+          showErrorToast("Campo obrigatório!", "Informe o objeto para remover.");
+        }
+      }
+
+      if (type === "recolor") {
+        if (!values.prompt) {
+          showErrorToast("Campo obrigatório!", "Informe o objeto para recolorir.");
+          return;
+        }
+
+        if (!values.color) {
+          showErrorToast("Campo obrigatório!", "Selecione a cor de substituição.");
+          return;
+        }
+      }
+
+      if (type === "fill" && !values.aspectRatio) {
+        showErrorToast("Campo obrigatório!", "Selecione a proporção da tela.");
+        return;
+      }
+
+      if (!values.publicId) {
+        showErrorToast("Campo obrigatório!", "Faça upload de uma imagem.");
+        return;
+      }
+
+      setTransformationConfig(
+        deepMergeObjects(newTransformation, transformationConfig)
+      );
+
+      setNewTransformation(null);
+
+      startTransition(async () => {
+        await updateCredits(userId, creditFee);
+          toast({
+            title: "Transformação aplicada",
+            description: "1 crédito usado",
+            duration: 5000,
+            className: "success-toast"
+          });
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Houve um erro em sua transformação",
+        description: "Revise e tente novamente.",
+        duration: 5000,
+        className: "error-toast"
+      });
+    } finally {
+      setIsTransforming(false);
+    }
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -210,9 +270,9 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
-        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal userId={userId} />}
+        {creditBalance < Math.abs(creditFee) && !["crop", "compress"].includes(type) && <InsufficientCreditsModal userId={userId} />}
 
-        {["crop", "compress", "resize", "rotate"].includes(type) && <ConstructionModal />}
+        {["crop", "compress"].includes(type) && <ConstructionModal />}
 
         <div className="prompt-field">
           <CustomField
@@ -262,7 +322,6 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                   <Input
                     value={field.value}
                     className="input-field"
-                    placeholder="Termos inglês ou português (pt-BR)"
                     onChange={(e) => onInputChangeHandler(
                       'prompt',
                       e.target.value,
@@ -278,7 +337,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
                   control={form.control}
                   name="color"
                   formLabel={"Cor de substituição"}
-                  className="w-1/2"
+                  className="w-full md:w-1/2"
                   render={({ field }) => (
                     <div className="color-picker-container">
                       <Input

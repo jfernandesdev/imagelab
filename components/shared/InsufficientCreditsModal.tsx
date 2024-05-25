@@ -25,12 +25,12 @@ export const InsufficientCreditsModal = ({ userId }: { userId: string }) => {
   const handleAddCredits = async () => {
     try {
       startTransition(async () => {
-        await updateCredits(userId, 2);
+        await updateCredits(userId, 5);
       });
   
       toast({
         title: "Sucesso!",
-        description: "Você ganhou +2 créditos gratuitos.",
+        description: "Você ganhou +5 créditos gratuitos.",
   
         duration: 5000,
         className: "success-toast"
