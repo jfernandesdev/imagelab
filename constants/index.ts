@@ -35,6 +35,11 @@ export const navLinks = [
     icon: "/assets/icons/crop.svg",
   },
   {
+    label: "Compressor de Imagem",
+    route: "/transformations/add/compress",
+    icon: "/assets/icons/compress.svg",
+  },
+  {
     label: "Meus créditos",
     route: "/credit",
     icon: "/assets/icons/coins.svg",
@@ -107,6 +112,17 @@ export const transformationTypes = {
     },
     icon: "crop.svg",
   },
+  compress: {
+    type: "compress",
+    title: "Comprimir Imagem",
+    transformedLabel: "Comprimir Imagem",
+    labelButton: "Comprimir Imagem",
+    subTitle: "Comprima imagens reduzindo seu tamanho sem perder a qualidade.",
+    config: {
+      crop: {},
+    },
+    icon: "compress.svg",
+  },
 };
 
 export const aspectRatioOptions = {
@@ -132,8 +148,8 @@ export const aspectRatioOptions = {
 
 export const defaultValues = {
   title: "",
-  aspectRatio: "1:1",
-  color: "#000000",
+  aspectRatio: "",
+  color: "",
   prompt: "",
   publicId: ""
 };

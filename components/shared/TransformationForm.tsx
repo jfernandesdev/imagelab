@@ -3,6 +3,7 @@
 import { z } from "zod"
 import { useEffect, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
+import { useToast } from "@/components/ui/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { getCldImageUrl } from "next-cloudinary"
 
@@ -22,6 +23,7 @@ import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils"
 import { aspectRatioOptions, creditFee, defaultValues, transformationTypes } from "@/constants"
 import { useRouter } from "next/navigation"
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal"
+import { ConstructionModal } from "./ConstructionModal"
 
 export const formSchema = z.object({
   title: z.string(),
@@ -43,6 +45,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const initialValues = data && action === 'Update' ? {
     title: data?.title,
@@ -50,7 +53,11 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     color: data?.color,
     prompt: data?.prompt,
     publicId: data?.publicId,
-  } : defaultValues;
+  } : {
+      ...defaultValues,
+      color: type === 'recolor' ? '#000000' : '',
+      aspectRatio: type === 'fill' ? '1:1' : ''
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -94,22 +101,41 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
   const onTransformHandler = async () => {
     setIsTransforming(true);
 
-    console.log('new transform', newTransformation);
-    console.log('onTransformHandler', transformationConfig);
-
     setTransformationConfig(
       deepMergeObjects(newTransformation, transformationConfig)
     );
 
     setNewTransformation(null);
 
-    // startTransition(async () => {
-    //   await updateCredits(userId, creditFee);
-    // });
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);
+    });
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
+
+    if (!values.title) {
+      toast({
+        title: "Erro no formulário",
+        description: "O título da imagem é obrigatório",
+        duration: 5000,
+        className: "error-toast"
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!values.publicId) {
+      toast({
+        title: "Erro no formulário",
+        description: "O upload de uma imagem é obrigatória.",
+        duration: 5000,
+        className: "error-toast"
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     if (data || image) {
       const transformationUrl = getCldImageUrl({
@@ -170,7 +196,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         }
       }
     }
-
+  
     setIsSubmitting(false);
   };
 
@@ -185,6 +211,8 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
         {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal userId={userId} />}
+
+        {["crop", "compress", "resize", "rotate"].includes(type) && <ConstructionModal />}
 
         <div className="prompt-field">
           <CustomField
@@ -303,7 +331,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
           <Button
             type="button"
             className="submit-button"
-            disabled={isTransforming || newTransformation === null}
+            disabled={isSubmitting || isTransforming || newTransformation === null}
             onClick={onTransformHandler}
           >
             {isTransforming ? 'Transformando...' : transformationType?.labelButton}
@@ -312,7 +340,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
           <Button
             type="submit"
             className="submit-button capitalize"
-            disabled={isSubmitting || isTransforming}
+            disabled={isSubmitting || isTransforming || !(image?.publicId && transformationConfig)}
           >
             {isSubmitting ? 'Enviando...' : 'Salvar transformação'}
           </Button>

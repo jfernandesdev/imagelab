@@ -68,6 +68,7 @@ declare type Transformations = {
   };
   removeBackground?: boolean;
   crop?: any;
+  compress?: any;
 };
 
 declare type TransformationTypeKey =
@@ -76,7 +77,8 @@ declare type TransformationTypeKey =
   | "remove"
   | "recolor"
   | "removeBackground"
-  | "crop";
+  | "crop"
+  | "compress";
 
 declare type FormUrlQueryParams = {
   searchParams: string;
