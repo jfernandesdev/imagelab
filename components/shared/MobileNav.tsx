@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from 'next/navigation'
@@ -11,16 +12,22 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 const MobileNav = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const renderNavItem = (link: typeof navLinks[number]) => {
     const isActive = link.route === pathname;
 
+    const handleClick = () => {
+      router.push(link.route);
+      setIsSidebarOpen(false);
+    };
+    
     return (
       <li
         key={link.route}
         className={`${isActive && 'gradient-text'} flex gap-2 text-sm items-center whitespace-nowrap text-dark-700`}
       >
-        <Link className="sidebar-link" href={link.route}>
+        <a className="sidebar-link" onClick={handleClick}>
           <Image
             src={link.icon}
             alt={link.label}
@@ -29,13 +36,13 @@ const MobileNav = () => {
             className={`${isActive && 'imgActive'}`}
           />
           {link.label}
-        </Link>
+        </a>
       </li>
     );
   };
 
   const handleSignOut = () => {
-    router.push('/sign-in');
+    router.push('/');
   }
 
   return (
@@ -53,7 +60,7 @@ const MobileNav = () => {
       <nav className="flex gap-2">
         <UserButton afterSignOutUrl='/' showName={false} />
 
-        <Sheet>
+        <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
           <SheetTrigger>
             <Image
               src="/assets/icons/menu.svg"

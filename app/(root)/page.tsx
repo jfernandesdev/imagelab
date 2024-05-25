@@ -1,9 +1,11 @@
 import { auth } from "@clerk/nextjs"
+import { redirect } from "next/navigation";
+import Image from "next/image"
+
+import { getUserById } from "@/lib/actions/user.actions";
+
 import { Collection } from "@/components/shared/Collection"
 import { getUserImages } from "@/lib/actions/image.actions";
-import Image from "next/image"
-import { getUserById } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
 
 const Home = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
@@ -17,7 +19,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   const images = await getUserImages({ page, userId: user._id });
 
   return (
-    <>
+    <> 
       <section className="home">
         <h1 className="home-heading">
           Simplifique suas edições <br /> com

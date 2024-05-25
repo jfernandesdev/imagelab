@@ -27,7 +27,7 @@ const Sidebar = () => {
   };
 
   const handleSignOut = () => {
-    router.push('/sign-in');
+    router.push('/');
   }
 
   const renderNavItem = (link: typeof navLinks[number]) => {
