@@ -60,7 +60,7 @@ const Credit = async ({ searchParams }: SearchParamProps) => {
 
       <section className="mt-8 md:mt-14 pb-12">
         <Collection
-          hasSearch={true}
+          hasSearch={false}
           images={images?.data}
           totalPages={images?.totalPage}
           page={page}

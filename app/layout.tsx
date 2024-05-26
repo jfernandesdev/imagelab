@@ -31,7 +31,7 @@ export default function RootLayout({
         }
       }}>
       <html lang="pt-br">
-        <body className={cn("font-poppins antialiased", poppins.variable)}>
+        <body suppressHydrationWarning={true}  className={cn("font-poppins antialiased", poppins.variable)}>
           {children}
         </body>
       </html>

@@ -14,7 +14,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   if (!userId) redirect("/sign-in");
 
   const user = await getUserById(userId);
-  const images = await getUserImages({ page, userId: user._id });
+  const images = await getUserImages({ page, userId: user?._id });
 
   return (
     <> 
@@ -41,7 +41,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
 
       <section className="sm:mt-12 pb-6">
         <Collection 
-          hasSearch={false}
+          hasSearch={true}
           images={images?.data}
           totalPages={images?.totalPage}
           page={page}
