@@ -210,6 +210,10 @@
     @apply font-medium text-[10px] leading-[140%];
   }
 
+  .text-alert {
+      @apply flex gap-1 font-normal text-[12px] leading-[140%] text-purple-500;
+  }
+
   /* Shadcn overrides */
   .button {
     @apply py-4 px-6 flex-center gap-3 rounded-full p-16-semibold focus-visible:ring-offset-0 focus-visible:ring-transparent !important;

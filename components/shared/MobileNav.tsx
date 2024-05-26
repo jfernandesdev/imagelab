@@ -30,7 +30,7 @@ const MobileNav = () => {
         <a className="sidebar-link" onClick={handleClick}>
           <Image
             src={link.icon}
-            alt={link.label}
+            alt="Icone"
             width={22}
             height={22}
             className={`${isActive && 'imgActive'}`}

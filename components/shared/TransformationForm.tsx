@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { useToast } from "@/components/ui/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { getCldImageUrl } from "next-cloudinary"
+import Image from "next/image"
 
 import { Form } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -152,12 +153,12 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
       startTransition(async () => {
         await updateCredits(userId, creditFee);
-          toast({
-            title: "Transformação aplicada",
-            description: "1 crédito usado",
-            duration: 5000,
-            className: "success-toast"
-          });
+        toast({
+          title: "Transformação aplicada",
+          description: "1 crédito usado",
+          duration: 5000,
+          className: "success-toast"
+        });
       });
     } catch (error) {
       console.error(error);
@@ -256,7 +257,7 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
         }
       }
     }
-  
+
     setIsSubmitting(false);
   };
 
@@ -274,91 +275,110 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
 
         {["crop", "compress"].includes(type) && <ConstructionModal />}
 
-        <div className="prompt-field">
-          <CustomField
-            control={form.control}
-            name="title"
-            formLabel="Título da Imagem"
-            className="w-full"
-            render={({ field }) => (
-              <Input {...field} className="input-field" />
-            )}
-          />
-
-          {type === 'fill' && (
+        <div>
+          <div className="prompt-field">
             <CustomField
               control={form.control}
-              name="aspectRatio"
-              formLabel="Proporção da tela"
+              name="title"
+              formLabel="Título da Imagem"
               className="w-full"
               render={({ field }) => (
-                <Select 
-                  onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}
-                  value={field.value}
-                >
-                  <SelectTrigger className="select-field">
-                    <SelectValue placeholder="Proporção da tela" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.keys(aspectRatioOptions).map((key) => (
-                      <SelectItem key={key} value={key} className="select-item">
-                        {aspectRatioOptions[key as AspectRatioKey].label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Input {...field} className="input-field" />
               )}
             />
-          )}
 
-          {(type === 'remove' || type === 'recolor') && (
-            <>
+            {type === 'fill' && (
               <CustomField
                 control={form.control}
-                name="prompt"
-                formLabel={type === 'remove' ? "Objeto para remover" : "Objeto para recolorir"}
+                name="aspectRatio"
+                formLabel="Proporção da tela"
                 className="w-full"
                 render={({ field }) => (
-                  <Input
+                  <Select
+                    onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}
                     value={field.value}
-                    className="input-field"
-                    onChange={(e) => onInputChangeHandler(
-                      'prompt',
-                      e.target.value,
-                      type,
-                      field.onChange
+                  >
+                    <SelectTrigger className="select-field">
+                      <SelectValue placeholder="Proporção da tela" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(aspectRatioOptions).map((key) => (
+                        <SelectItem key={key} value={key} className="select-item">
+                          {aspectRatioOptions[key as AspectRatioKey].label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            )}
+
+            {(type === 'remove' || type === 'recolor') && (
+              <>
+                <CustomField
+                  control={form.control}
+                  name="prompt"
+                  formLabel={type === 'remove' ? "Objeto para remover" : "Objeto para recolorir"}
+                  className="w-full"
+                  render={({ field }) => (
+                    <>
+                      <Input
+                        value={field.value}
+                        className="input-field"
+                        onChange={(e) => onInputChangeHandler(
+                          'prompt',
+                          e.target.value,
+                          type,
+                          field.onChange
+                        )}
+                      />
+                    </>
+                  )}
+                />
+
+                {type === 'recolor' && (
+                  <CustomField
+                    control={form.control}
+                    name="color"
+                    formLabel={"Cor de substituição"}
+                    className="w-full md:w-1/2"
+                    render={({ field }) => (
+                      <div className="color-picker-container">
+                        <Input
+                          value={field.value}
+                          type="color"
+                          onChange={(e) =>
+                            onInputChangeHandler(
+                              'color',
+                              e.target.value,
+                              'recolor',
+                              field.onChange
+                            )
+                          }
+                        />
+                        <span className="color-code">{field.value}</span>
+                      </div>
                     )}
                   />
                 )}
-              />
+              </>
+            )}
+          </div>
 
-              {type === 'recolor' && (
-                <CustomField
-                  control={form.control}
-                  name="color"
-                  formLabel={"Cor de substituição"}
-                  className="w-full md:w-1/2"
-                  render={({ field }) => (
-                    <div className="color-picker-container">
-                      <Input
-                        value={field.value}
-                        type="color"
-                        onChange={(e) =>
-                          onInputChangeHandler(
-                            'color',
-                            e.target.value,
-                            'recolor',
-                            field.onChange
-                          )
-                        }
-                      />
-                      <span className="color-code">{field.value}</span>
-                    </div>
-                  )}
+          <div className="py-2">
+            {(type === 'remove' || type === 'recolor') && (
+              <span className="text-alert">
+                <Image
+                  src="/assets/icons/warning-circle.svg"
+                  alt="Alerta"
+                  width={12}
+                  height={12}
                 />
-              )}
-            </>
-          )}
+
+                Precisão do objeto a ser {type === 'remove' ? 'removido' : 'recolorido'} sendo ajustada para diferentes idiomas. Até o momento, os termos em inglês são os mais precisos.
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="media-uploader-field">

@@ -29,7 +29,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
               {transformation && (
                 <Image
                   src={`/assets/icons/${transformation.icon}`}
-                  alt={transformation.title}
+                  alt="ícone do tipo da transformação"
                   width={14}
                   height={14}
                   className="iconPurple"
